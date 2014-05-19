@@ -20,6 +20,9 @@ You should create one R script called run_analysis.R that does the following.
 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
 
 
+
+
+
 ```
 ## UCI_HAR_Dataset
 ## ├── README.txt
@@ -60,13 +63,13 @@ You should create one R script called run_analysis.R that does the following.
 
 
 
+
 ```r
-1 + 1
+RoCo <- function(x) {
+    Cols <- as.integer(system(sprintf("cat '%s' | wc -l", x), intern = TRUE))
+    Rows <- as.integer(system(sprintf("head -n1 '%s' | wc -w", x), intern = TRUE))
+    c(Cols, Rows)
+}
 ```
-
-```
-## [1] 2
-```
-
 
 
