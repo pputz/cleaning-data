@@ -10,7 +10,9 @@ The repo contains the following files:
 4. run_analysis.R: R script to create the tidy data set from a set of raw data files.
 
 
-The assignment for the course project was to clean up a specific set of accelerometer data [https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip]([https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip]) and also provide a code book for the tidy data.
+The assignment for the course project was to clean up a specific set of accelerometer data and also provide a code book for the tidy data. The source data can be downloaded here:
+
+[https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip]([https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip])
 
 Specifically, the assignment states:
 
@@ -27,13 +29,49 @@ So here we go:
 
 
 
-## 1. Merge the training and the test sets to create one data set
+### 1. Merge the training and the test sets to create one data set
 
 I am assuming that the "raw" data set alrady exists in the local directory at the same level as the run_analysis.R script. The data set consitsts of multiple files:
 
-# ```{r file-tree, engine='bash', echo=FALSE}
-# tree UCI_HAR_Dataset
-# ```
+
+```
+## UCI_HAR_Dataset
+## ├── README.txt
+## ├── activity_labels.txt
+## ├── features.txt
+## ├── features_info.txt
+## ├── test
+## │   ├── Inertial\ Signals
+## │   │   ├── body_acc_x_test.txt
+## │   │   ├── body_acc_y_test.txt
+## │   │   ├── body_acc_z_test.txt
+## │   │   ├── body_gyro_x_test.txt
+## │   │   ├── body_gyro_y_test.txt
+## │   │   ├── body_gyro_z_test.txt
+## │   │   ├── total_acc_x_test.txt
+## │   │   ├── total_acc_y_test.txt
+## │   │   └── total_acc_z_test.txt
+## │   ├── X_test.txt
+## │   ├── subject_test.txt
+## │   └── y_test.txt
+## └── train
+##     ├── Inertial\ Signals
+##     │   ├── body_acc_x_train.txt
+##     │   ├── body_acc_y_train.txt
+##     │   ├── body_acc_z_train.txt
+##     │   ├── body_gyro_x_train.txt
+##     │   ├── body_gyro_y_train.txt
+##     │   ├── body_gyro_z_train.txt
+##     │   ├── total_acc_x_train.txt
+##     │   ├── total_acc_y_train.txt
+##     │   └── total_acc_z_train.txt
+##     ├── X_train.txt
+##     ├── subject_train.txt
+##     └── y_train.txt
+## 
+## 4 directories, 28 files
+```
+
 
 Not all data files are used to produce the tidy data set. I am considering the files X_test.txt and X_train.txt the main source for creating the tidy data set. I am ignoring the content of the "Inertial Signal" folders since they hold the data - also already preprossed - that were used to calculate the variables (or features) in X_test.txt and X_train.txt.
 
@@ -140,7 +178,7 @@ setnames(AllDT, c("subject", "activity", featuresNames))
 ```
 
 
-## 2. Extract only the measurements on the mean and standard deviation for each measurement
+### 2. Extract only the measurements on the mean and standard deviation for each measurement
 
 This is a tricky one. I decide to use all variables that have "_std" in their names. However, for the "mean" variables I exlclude "meanFreq()" and all "angle" variables. The resulting subset contains an equal number of 33 mean and std variables.
 
@@ -153,7 +191,7 @@ SubsetDT <- AllDT[, subsetMeansStd, with = FALSE]
 ```
 
 
-## 3. Use descriptive activity names to name the activities in the data set
+### 3. Use descriptive activity names to name the activities in the data set
 
 I import activity labels from activity_labels.txt. Then change the "activity" variable of the data.table into a factor and finally change the level attributes using the activity labels.
 
@@ -168,7 +206,7 @@ setattr(SubsetDT$activity, "levels", tolower(activityLabels[, V2]))
 
 
 
-## 5. Create a second, independent tidy data set with the average of each variable for each activity and each subject
+### 5. Create a second, independent tidy data set with the average of each variable for each activity and each subject
 
 For this I use the data.table capabilties. First I use "subject" and "activity" as keys for the data.table. Then caclulate the group means using the "by" argument. Then I sort the resulting TidyDT nicely by subject and activity. And finally I write out the tidy data set as a tab separated text file.
 
