@@ -171,10 +171,6 @@ featuresNames <- gsub("()", "", featuresNames[, 1], fixed = TRUE)
 featuresNames <- gsub("-", "_", featuresNames, fixed = TRUE)
 
 setnames(AllDT, c("subject", "activity", featuresNames))
-
-
-
-# head(AllDT[,list(subject, activity, tBodyAcc_mean_X)], n=100)
 ```
 
 
@@ -197,11 +193,28 @@ I import activity labels from activity_labels.txt. Then change the "activity" va
 
 
 ```r
-## Import activity lables; change 'activity' variable into factor; use the
+## Import activity labels; change 'activity' variable into factor; use the
 ## datatable funtion setattributes to change factor levels
 activityLabels <- fread("UCI_HAR_Dataset/activity_labels.txt", colClasses = "factor")
 SubsetDT$activity <- as.factor(SubsetDT$activity)
 setattr(SubsetDT$activity, "levels", tolower(activityLabels[, V2]))
+```
+
+
+### 4. Appropriately label the data set with descriptive activity names
+
+I am assuming that "activity names" should really mean "variable names". My goal is to use labels that a) describe the variable as good as possible, b) are concise (i.e. brief), c) easy to read, and d) do not contain any charcters that create trouble in R. I have dealt with d) already in step 1 above. Looking at the current labels, I find them already pretty good (e.g. "tBodyAcc_std_X", "fBodyGyro_mean_Z"). They already are very descriptive and carry a lot of meaning. Surely, I could spell out all the individual components but such long labels would violate my criterion b).
+
+The only little thing, I'd like to change is to use upper case for "Mean" and "Std". In my mind it enhances readability through a better "camel case" rhythm. I like the underscores before Mean/Std and before X/Y/Z because it separates the label into three differen components: technical description of the measurement, statistical metric, and spacial direction.
+
+
+```r
+## Get current labels and change _mean and _std to upper case; apply new
+## labels to data.table
+
+newLabels <- gsub("_mean", "_Mean", names(SubsetDT), fixed = TRUE)
+newLabels <- gsub("_std", "_Std", newLabels, fixed = TRUE)
+setnames(SubsetDT, newLabels)
 ```
 
 
