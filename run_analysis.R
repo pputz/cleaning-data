@@ -86,9 +86,6 @@ setnames(AllDT, c("subject", "activity",featuresNames))
 
 
 
-# head(AllDT[,list(subject, activity, tBodyAcc_mean_X)], n=100)
-
-
 ## @knitr subset
 ## Create vetor with selected variable names; subset data.table
 subsetMeansStd <- c("subject", "activity", featuresNames[grep("_mean_|_mean$|_std", featuresNames)])
@@ -96,13 +93,22 @@ SubsetDT <- AllDT[,subsetMeansStd, with=FALSE]
 
 
 
-## @knitr activity_lables
-## Import activity lables; change "activity" variable into factor;
+## @knitr activity_labels
+## Import activity labels; change "activity" variable into factor;
 ## use the datatable funtion setattributes to change factor levels
 activityLabels <- fread("UCI_HAR_Dataset/activity_labels.txt", colClasses="factor")
 SubsetDT$activity <- as.factor(SubsetDT$activity)
 setattr(SubsetDT$activity,"levels", tolower(activityLabels[ ,V2]))
 
+
+
+## @knitr variable_labels
+## Get current labels and change _mean and _std to upper case;
+## apply new labels to data.table
+
+newLabels <- gsub("_mean", "_Mean", names(SubsetDT), fixed = TRUE)
+newLabels <- gsub("_std", "_Std", newLabels, fixed = TRUE)
+setnames(SubsetDT, newLabels)
 
 
 
