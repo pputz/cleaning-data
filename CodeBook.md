@@ -92,10 +92,8 @@ HAR_Tidy.txt has 180 observations and 68 variables. The fist two variables are:
   
 The remaining 66 variable are so-called "features". They come from the accelerometer and gyroscope 3-axial raw signals. Reyes-Ortiz et al. caputured these time domain signals (prefix 't' to denote time) at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
 
-Note: The units for the measured data are standard gravity units (g) for the accelerometer data and rad/sec for the gyroscope data. However, *all features are normalized and bounded within [-1,1].*
+Note: The units for the measured data are standard gravity units (g) for the accelerometer data and rad/sec for the gyroscope data. However, **all features are normalized and bounded within [-1,1].**
 
-These signals were used to estimate variables of the feature vector for each pattern:  
-'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
 
   - tBodyAcc_Mean_X: Arithmetic mean of body acceleration in direction X.
   - tBodyAcc_Mean_Y: Arithmetic mean of body acceleration in direction Y.
@@ -110,7 +108,7 @@ These signals were used to estimate variables of the feature vector for each pat
   - tGravityAcc_Std_Y: Standard deviation of gravity acceleration in direction Y.
   - tGravityAcc_Std_Z: Standard deviation of gravity acceleration in direction Z.
   
-Subsequently, Reyes-Ortiz et al. obtained Jerk signals of the body linear acceleration and angular velocity by deriving them in time. Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+Subsequently, Reyes-Ortiz et al. obtained Jerk signals of the body linear acceleration and angular velocity by deriving them in time. Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm. 
  
  
   - tBodyAccJerk_Mean_X: Arithmetic mean of jerk signal of linear body acceleration in direction X.
