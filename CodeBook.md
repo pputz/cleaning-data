@@ -6,7 +6,7 @@ In my CodeBook I will provide a detailed description of the variables, activity 
 
 ### UCI_HAR Data Set
 
-The source data is the "Human Activity Recognition Using Smartphones Dataset" which was created by [Jorge L. Reyes-Ortiz et al.][1]
+The source data is the "Human Activity Recognition Using Smartphones Dataset" which was created by Jorge L. Reyes-Ortiz et al.[^1]
 
 I retieved the data set "UCI_HAR_Dataset" from the following internet location:
 
@@ -85,74 +85,90 @@ For details and source code for each of these step refer to the README.md file.
 
 ## Variables in HAR_Tidy.txt
 
+HAR_Tidy.txt has 180 observations and 68 variables. The fist two variables are:
 
   - subject: Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30.
-  - activity: Each row identifies one of six activities observed: walking, walking_upstairs, walking_downstairs sitting, standing, laying
-  - tBodyAcc_Mean_X: 
-  - tBodyAcc_Mean_Y: 
-  - tBodyAcc_Mean_Z: 
-  - tBodyAcc_Std_X: 
-  - tBodyAcc_Std_Y: 
-  - tBodyAcc_Std_Z: 
-  - tGravityAcc_Mean_X: 
-  - tGravityAcc_Mean_Y: 
-  - tGravityAcc_Mean_Z: 
-  - tGravityAcc_Std_X: 
-  - tGravityAcc_Std_Y: 
-  - tGravityAcc_Std_Z: 
-  - tBodyAccJerk_Mean_X: 
-  - tBodyAccJerk_Mean_Y: 
-  - tBodyAccJerk_Mean_Z: 
-  - tBodyAccJerk_Std_X: 
-  - tBodyAccJerk_Std_Y: 
-  - tBodyAccJerk_Std_Z: 
-  - tBodyGyro_Mean_X: 
-  - tBodyGyro_Mean_Y: 
-  - tBodyGyro_Mean_Z: 
-  - tBodyGyro_Std_X: 
-  - tBodyGyro_Std_Y: 
-  - tBodyGyro_Std_Z: 
-  - tBodyGyroJerk_Mean_X: 
-  - tBodyGyroJerk_Mean_Y: 
-  - tBodyGyroJerk_Mean_Z: 
-  - tBodyGyroJerk_Std_X: 
-  - tBodyGyroJerk_Std_Y: 
-  - tBodyGyroJerk_Std_Z: 
-  - tBodyAccMag_Mean: 
-  - tBodyAccMag_Std: 
-  - tGravityAccMag_Mean: 
-  - tGravityAccMag_Std: 
-  - tBodyAccJerkMag_Mean: 
-  - tBodyAccJerkMag_Std: 
-  - tBodyGyroMag_Mean: 
-  - tBodyGyroMag_Std: 
-  - tBodyGyroJerkMag_Mean: 
-  - tBodyGyroJerkMag_Std: 
-  - fBodyAcc_Mean_X: 
-  - fBodyAcc_Mean_Y: 
-  - fBodyAcc_Mean_Z: 
-  - fBodyAcc_Std_X: 
-  - fBodyAcc_Std_Y: 
-  - fBodyAcc_Std_Z: 
-  - fBodyAccJerk_Mean_X: 
-  - fBodyAccJerk_Mean_Y: 
-  - fBodyAccJerk_Mean_Z: 
-  - fBodyAccJerk_Std_X: 
-  - fBodyAccJerk_Std_Y: 
-  - fBodyAccJerk_Std_Z: 
-  - fBodyGyro_Mean_X: 
-  - fBodyGyro_Mean_Y: 
-  - fBodyGyro_Mean_Z: 
-  - fBodyGyro_Std_X: 
-  - fBodyGyro_Std_Y: 
-  - fBodyGyro_Std_Z: 
-  - fBodyAccMag_Mean: 
-  - fBodyAccMag_Std: 
-  - fBodyBodyAccJerkMag_Mean: 
-  - fBodyBodyAccJerkMag_Std: 
-  - fBodyBodyGyroMag_Mean: 
-  - fBodyBodyGyroMag_Std: 
-  - fBodyBodyGyroJerkMag_Mean: 
-  - fBodyBodyGyroJerkMag_Std: 
+  - activity: Each row identifies one of six activities observed: walking, walking_upstairs, walking_downstairs sitting, standing, laying. In the orignial experiment the subjects were videotaped in order to identify these activites.
+  
+The remaining 66 variable are so-called "features". They come from the accelerometer and gyroscope 3-axial raw signals. Reyes-Ortiz et al. caputured these time domain signals (prefix 't' to denote time) at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
 
-[1]: Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
+Note: The units for the measured data are standard gravity units (g) for the accelerometer data and rad/sec for the gyroscope data. However, *all features are normalized and bounded within [-1,1].*
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+  - tBodyAcc_Mean_X: Arithmetic mean of body acceleration in direction X.
+  - tBodyAcc_Mean_Y: Arithmetic mean of body acceleration in direction Y.
+  - tBodyAcc_Mean_Z: Arithmetic mean of body acceleration in direction Z.
+  - tBodyAcc_Std_X: Standard deviation of body acceleration in direction X.
+  - tBodyAcc_Std_Y: Standard deviation of body acceleration in direction Y.
+  - tBodyAcc_Std_Z: Standard deviation of body acceleration in direction Z.
+  - tGravityAcc_Mean_X: Arithmetic mean of gravity acceleration in direction X.
+  - tGravityAcc_Mean_Y: Arithmetic mean of gravity acceleration in direction Y.
+  - tGravityAcc_Mean_Z: Arithmetic mean of gravity acceleration in direction Z.
+  - tGravityAcc_Std_X: Standard deviation of gravity acceleration in direction X.
+  - tGravityAcc_Std_Y: Standard deviation of gravity acceleration in direction Y.
+  - tGravityAcc_Std_Z: Standard deviation of gravity acceleration in direction Z.
+  
+Subsequently, Reyes-Ortiz et al. obtained Jerk signals of the body linear acceleration and angular velocity by deriving them in time. Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+ 
+ 
+  - tBodyAccJerk_Mean_X: Arithmetic mean of jerk signal of linear body acceleration in direction X.
+  - tBodyAccJerk_Mean_Y: Arithmetic mean of jerk signal of linear body acceleration in direction Y.
+  - tBodyAccJerk_Mean_Z: Arithmetic mean of jerk signal of linear body acceleration in direction Z.
+  - tBodyAccJerk_Std_X: Standard deviation of jerk signal of linear body acceleration in direction X.
+  - tBodyAccJerk_Std_Y: Standard deviation of jerk signal of linear body acceleration in direction Y.
+  - tBodyAccJerk_Std_Z: Standard deviation of jerk signal of linear body acceleration in direction Z.
+  - tBodyGyro_Mean_X: Arithmetic mean of angular body velocity in direction X.
+  - tBodyGyro_Mean_Y: Arithmetic mean of angular body velocity in direction Y.
+  - tBodyGyro_Mean_Z: Arithmetic mean of angular body velocity in direction Z.
+  - tBodyGyro_Std_X: Standard deviation of angular body velocity in direction X.
+  - tBodyGyro_Std_Y: Standard deviation of angular body velocity in direction Y.
+  - tBodyGyro_Std_Z: Standard deviation of angular body velocity in direction Z.
+  - tBodyGyroJerk_Mean_X: Arithmetic mean of jerk signal of angular body velocity in direction X.
+  - tBodyGyroJerk_Mean_Y: Arithmetic mean of jerk signal of angular body velocity in direction Y.
+  - tBodyGyroJerk_Mean_Z: Arithmetic mean of jerk signal of angular body velocity in direction Z.
+  - tBodyGyroJerk_Std_X: Standard deviation of jerk signal of angular body velocity in direction X.
+  - tBodyGyroJerk_Std_Y: Standard deviation of jerk signal of angular body velocity in direction Y.
+  - tBodyGyroJerk_Std_Z: Standard deviation of jerk signal of angular body velocity in direction Z.
+  - tBodyAccMag_Mean: Arithmetic mean of magnitude of linear body acceleration.
+  - tBodyAccMag_Std: Standard deviation of magnitude of linear body acceleration.
+  - tGravityAccMag_Mean: Arithmetic mean of magnitude of gravity acceleration.
+  - tGravityAccMag_Std: Standard deviation of magnitude of gravity acceleration.
+  - tBodyAccJerkMag_Mean: Arithmetic mean of jerk magnitude of linear body acceleration.
+  - tBodyAccJerkMag_Std: Standard deviation of jerk magnitude of linear body acceleration.
+  - tBodyGyroMag_Mean: Arithmetic mean of magnitude of angular body velocity.
+  - tBodyGyroMag_Std: Standard deviation of magnitude of angular body velocity.
+  - tBodyGyroJerkMag_Mean: Arithmetic mean of jerk magnitude of angular body velocity.
+  - tBodyGyroJerkMag_Std: Standard deviation of jerk magnitude of angular body velocity.
+  
+Finally, Reyes-Ortiz et al. applied a Fast Fourier Transform (FFT) to some of these signals producing frequency domain signals (indicated by 'f').
+
+  - fBodyAcc_Mean_X: Arithmetic mean of body acceleration in direction X (frequency domain).
+  - fBodyAcc_Mean_Y: Arithmetic mean of body acceleration in direction Y (frequency domain).
+  - fBodyAcc_Mean_Z: Arithmetic mean of body acceleration in direction Z (frequency domain).
+  - fBodyAcc_Std_X: Standard deviation of body acceleration in direction X (frequency domain).
+  - fBodyAcc_Std_Y: Standard deviation of body acceleration in direction Y (frequency domain).
+  - fBodyAcc_Std_Z: Standard deviation of body acceleration in direction Z (frequency domain).
+  - fBodyAccJerk_Mean_X: Arithmetic mean of jerk signal of linear body acceleration in direction X (frequency domain).
+  - fBodyAccJerk_Mean_Y: Arithmetic mean of jerk signal of linear body acceleration in direction Y (frequency domain).
+  - fBodyAccJerk_Mean_Z: Arithmetic mean of jerk signal of linear body acceleration in direction Z (frequency domain).
+  - fBodyAccJerk_Std_X: Standard deviation of jerk signal of linear body acceleration in direction X (frequency domain).
+  - fBodyAccJerk_Std_Y: Standard deviation of jerk signal of linear body acceleration in direction Y (frequency domain).
+  - fBodyAccJerk_Std_Z: Standard deviation of jerk signal of linear body acceleration in direction Z (frequency domain).
+  - fBodyGyro_Mean_X: Arithmetic mean of angular body velocity in direction X (frequency domain).
+  - fBodyGyro_Mean_Y: Arithmetic mean of angular body velocity in direction Y (frequency domain).
+  - fBodyGyro_Mean_Z: Arithmetic mean of angular body velocity in direction Z (frequency domain).
+  - fBodyGyro_Std_X: Standard deviation of angular body velocity in direction X (frequency domain).
+  - fBodyGyro_Std_Y: Standard deviation of angular body velocity in direction Y (frequency domain).
+  - fBodyGyro_Std_Z: Standard deviation of angular body velocity in direction Z (frequency domain).
+  - fBodyAccMag_Mean: Arithmetic mean of magnitude of linear body acceleration (frequency domain).
+  - fBodyAccMag_Std: Standard deviation of magnitude of linear body acceleration (frequency domain).
+  - fBodyBodyAccJerkMag_Mean: Arithmetic mean of jerk magnitude of linear body acceleration (frequency domain).
+  - fBodyBodyAccJerkMag_Std: Standard deviation of jerk magnitude of linear body acceleration (frequency domain).
+  - fBodyBodyGyroMag_Mean: Arithmetic mean of magnitude of angular body velocity (frequency domain).
+  - fBodyBodyGyroMag_Std: Standard deviation of magnitude of angular body velocity (frequency domain).
+  - fBodyBodyGyroJerkMag_Mean: Arithmetic mean of jerk magnitude of angular body velocity (frequency domain).
+  - fBodyBodyGyroJerkMag_Std: Standard deviation of jerk magnitude of angular body velocity (frequency domain).
+
+[^1]: Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
