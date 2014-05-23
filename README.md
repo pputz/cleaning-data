@@ -221,7 +221,7 @@ setnames(SubsetDT, newLabels)
 
 ### 5. Create a second, independent tidy data set with the average of each variable for each activity and each subject
 
-For this I use the data.table capabilties. First I use "subject" and "activity" as keys for the data.table. Then caclulate the group means using the "by" argument. Then I sort the resulting TidyDT nicely by subject and activity. And finally I write out the tidy data set as a tab separated text file.
+For this I use the data.table capabilties. First I use "subject" and "activity" as keys for the data.table. Then caclulate the group means using the "by" argument. Then I sort the resulting TidyDT nicely by subject and activity. And finally I write out the tidy data set as a tab separated text file. HAR_Tidy.txt has 180 observations and 68 variables.
 
 
 ```r
