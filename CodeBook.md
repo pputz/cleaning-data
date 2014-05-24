@@ -84,7 +84,7 @@ For details and source code for each of these steps refer to the README.md file.
 
 ## Variables in HAR_Tidy.txt
 
-HAR_Tidy.txt has 180 observations and 68 variables. The fist two variables are:
+HAR_Tidy.txt has 180 observations and 68 variables plus a header with variable names. The fist two variables are:
 
   - subject: Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30.
   - activity: Each row identifies one of six activities observed: walking, walking_upstairs, walking_downstairs sitting, standing, laying. In the orignial experiment the subjects were videotaped in order to identify these activites.
