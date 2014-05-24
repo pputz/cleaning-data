@@ -1,14 +1,13 @@
 # Code Book
 
-This code book describes the data file "HAR_Tidy.txt": the origin of the source data, transformations performed to create the tidy data set its variables.
+This code book describes the data file "HAR_Tidy.txt": the origin and content of the source data and transformations performed to create the tidy data set and its variables.
 
-In my CodeBook I will provide a detailed description of the variables, activity labels, my naming strategy, variable selection method, and notation. I am not sure of the value of including detailed descriptions of the meaning and interpretation of each of the many variables that I included. I think it is safer to explain the correspondence and transformations that were applied and link to the original documentation / citation materials (since my dataset and analysis script are both entirely dependent upon it).
 
 ### UCI_HAR Data Set
 
-The source data is the "Human Activity Recognition Using Smartphones Dataset" which was created by Jorge L. Reyes-Ortiz et al.[^1]
+The source data is the "Human Activity Recognition Using Smartphones Dataset" which was created by Jorge L. Reyes-Ortiz et al.[1]
 
-I retieved the data set "UCI_HAR_Dataset" from the following internet location:
+I retrieved the data set "UCI_HAR_Dataset" from the following internet location:
 
 [https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip]([https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip])
 
@@ -80,7 +79,7 @@ I am using the following steps to transform the above mentioned raw data files i
 4. Appropriately label the data set with descriptive activity names. 
 5. Create an independent tidy data "HAR_Tidy.txt" set with the average of each variable for each activity and each subject.
 
-For details and source code for each of these step refer to the README.md file.
+For details and source code for each of these steps refer to the README.md file.
 
 
 ## Variables in HAR_Tidy.txt
@@ -89,10 +88,12 @@ HAR_Tidy.txt has 180 observations and 68 variables. The fist two variables are:
 
   - subject: Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30.
   - activity: Each row identifies one of six activities observed: walking, walking_upstairs, walking_downstairs sitting, standing, laying. In the orignial experiment the subjects were videotaped in order to identify these activites.
-  
+
+**Each row in HAR_Tidy.txt represents observations for a unique combination of subject and activity.**
+
 The remaining 66 variable are so-called "features". They come from the accelerometer and gyroscope 3-axial raw signals. Reyes-Ortiz et al. caputured these time domain signals (prefix 't' to denote time) at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
 
-Note: The units for the measured data are standard gravity units (g) for the accelerometer data and rad/sec for the gyroscope data. However, **all features are normalized and bounded within [-1,1].**
+**Note:** The units for the measured data are standard gravity units (g) for the accelerometer data and rad/sec for the gyroscope data. However, **all features are normalized and bounded within [-1,1].**
 
 
   - tBodyAcc_Mean_X: Arithmetic mean of body acceleration in direction X.
@@ -169,4 +170,4 @@ Finally, Reyes-Ortiz et al. applied a Fast Fourier Transform (FFT) to some of th
   - fBodyBodyGyroJerkMag_Mean: Arithmetic mean of jerk magnitude of angular body velocity (frequency domain).
   - fBodyBodyGyroJerkMag_Std: Standard deviation of jerk magnitude of angular body velocity (frequency domain).
 
-[^1]: Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
+[1]: Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
