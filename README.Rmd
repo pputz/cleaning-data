@@ -1,22 +1,23 @@
 # Course Project: Getting and Cleaning Data
 
-This repo is set up for the Coursera course "Getting and Cleaning Data" (May 2012 by Jeff Leek, Roger D. Peng, Brian Caffo), specifically to share the results of the course project with the same name.
+This repo is for the Coursera course "Getting and Cleaning Data" (May 2012 by Jeff Leek, Roger D. Peng, Brian Caffo), specifically to share the results of the course project with the same name.
 
 The repo contains the following files:
 
-1. README.md: Description of this repo and details of the R script run_analysis.R
-2. Codebook.md: Describes the variables, the data, and any transformations or work that I performed to clean up the data for the tidy data set
-3. :Tidy data set
+1. README.md: Description of the files in this repo and details of the R script run_analysis.R
+1. README.Rmd: R markdown file with knitr commands used to create the README.md file
+2. Codebook.md: Describes the variables, the data, and any transformations performed to clean up the data for the tidy data set
+3. HAR_Tidy.txt :Tidy data set (tab delimited text file)
 4. run_analysis.R: R script to create the tidy data set from a set of raw data files.
 
 
-The assignment for the course project was to clean up a specific set of accelerometer data and also provide a code book for the tidy data. The source data can be downloaded here:
+The assignment for the course project was to clean up a specific set of accelerometer and gyroscope data and also provide a code book for the tidy data. The source data can be downloaded here (see CodeBood.md details on origin and content):
 
 [https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip]([https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip])
 
 Specifically, the assignment states:
 
-> create one R script called run_analysis.R that does the following. 
+> create one R script called run_analysis.R that does the following: 
 > 
 > 1. Merges the training and the test sets to create one data set.
 > 2. Extracts only the measurements on the mean and standard deviation for each measurement. 
@@ -43,7 +44,7 @@ Not all data files are used to produce the tidy data set. I am considering the f
 
 I am using data.tables and the associated function fread() for data import into R. However, I could not find a way for fread() to deal with the extra white spaces in the two main data files X_test.txt and X_train.txt. Therefore, I am using read.table() for those two files and convert the data.frames later into data.tables. 
 
-I created a fuction RoCo() that uses bash commands to return the number of rows and columns in a text file. I am using the results as attributes in the read.table() funtion in order to improve its speed.
+I created a function RoCo() that uses bash commands to return the number of rows and columns in a text file. I use the results as attributes in the read.table() function to improve its speed.
 
 ```{r, RoCo}
 
@@ -67,15 +68,23 @@ Now, let's merge the training and test data.table.
 
 ```
 
-The result is a data.table with `r dim(AllDT)[2]` columns and `r dim(AllDT)[1]` rows. The last step is to add variable names. I import the names for the feature variables from features.txt and manually add the lables "subject" and "activity" for the first two columns. However, the names in features.txt contain strings that cause problems in R like "(", ")", and "-". So I delete or replace them.
+The result is a data.table with `r dim(AllDT)[2]` columns and `r dim(AllDT)[1]` rows. The next step is to add variable names. I import the names for the feature variables from features.txt and manually add the labels "subject" and "activity" for the first two columns. However, the names in features.txt contain strings that cause problems in R like "()" and "-". So I delete or replace them.
 
 ```{r names}
 
 ```
 
+Finally, I check for any NAs and if all values are within the expected ranges.
+
+```{r integrity}
+
+```
+
+So everything looks good!
+
 ### 2. Extract only the measurements on the mean and standard deviation for each measurement
 
-This is a tricky one. I decide to use all variables that have "_std" in their names. However, for the "mean" variables I exlclude "meanFreq()" and all "angle" variables. The resulting subset contains an equal number of 33 mean and std variables.
+I decide to use all variables that have "_std" in their names. However, for the "mean" variables I exlclude "meanFreq()" and all "angle" variables. The resulting subset contains an equal number of 33 mean and std variables.
 
 ```{r subset}
 
@@ -91,7 +100,7 @@ I import activity labels from activity_labels.txt. Then change the "activity" va
 
 ### 4. Appropriately label the data set with descriptive activity names
 
-I am assuming that "activity names" should really mean "variable names". My goal is to use labels that a) describe the variable as good as possible, b) are concise (i.e. brief), c) easy to read, and d) do not contain any charcters that create trouble in R. I have dealt with d) already in step 1 above. Looking at the current labels, I find them already pretty good (e.g. "tBodyAcc_std_X", "fBodyGyro_mean_Z"). They already are very descriptive and carry a lot of meaning. Surely, I could spell out all the individual components but such long labels would violate my criterion b).
+My goal is to use labels that a) describe the variable as good as possible, b) are concise (i.e. brief), c) easy to read, and d) do not contain any charcters that create trouble in R. I have dealt with d) already in step 1 above. Looking at the current labels, I find them already pretty good (e.g. "tBodyAcc_std_X", "fBodyGyro_mean_Z"). They already are very descriptive and carry a lot of meaning. Surely, I could spell out all the individual components but such long labels would violate my criterion b).
 
 The only little thing, I'd like to change is to use upper case for "Mean" and "Std". In my mind it enhances readability through a better "camel case" rhythm. I like the underscores before Mean/Std and before X/Y/Z because it separates the label into three differen components: technical description of the measurement, statistical metric, and spacial direction.
 
