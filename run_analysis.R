@@ -85,6 +85,21 @@ featuresNames <- gsub("-", "_" , featuresNames, fixed = TRUE)
 setnames(AllDT, c("subject", "activity",featuresNames))
 
 
+## @knitr integrity
+
+## test for NAs;
+test <- NULL
+test[1] <- any(is.na(AllDT))
+
+## test whether all values are within the expected ranges
+test[2] <- any(AllDT$subject<1 | AllDT$subject>30)
+test[3] <- any(AllDT$activity<1 | AllDT$activity>6)
+
+test[4] <- any(AllDT[,3:ncol(AllDT), with=FALSE] < -1)
+test[5] <- any(AllDT[,3:ncol(AllDT), with=FALSE] > 1)
+
+any(test == TRUE) ## expected result: FALSE
+
 
 ## @knitr subset
 ## Create vetor with selected variable names; subset data.table
